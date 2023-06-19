@@ -7,7 +7,7 @@ public class TextureBuilder
        /// </summary>
        /// <param name="noiseMap">noise map needed to generate the texture</param>
        /// <returns>a texture2D with pixels colored by the noise map</returns>
-       public static Texture2D BuildTexture(float[,] noiseMap)
+       public static Texture2D BuildTexture(float[,] noiseMap, TerrainType[] terrainTypes)
        {
               Color[] pixels = new Color[noiseMap.Length];
 
@@ -19,7 +19,17 @@ public class TextureBuilder
                      {
                             int index = (x * pixelLength) + z;
 
-                            pixels[index] = Color.Lerp(Color.black, Color.white, noiseMap[x,z]);
+                            for (int t = 0; t < terrainTypes.Length; t++)
+                            {
+                                   if (noiseMap[x, z] < terrainTypes[t].threshold)
+                                   {
+                                          float minVal = t == 0 ? 0 : terrainTypes[t - 1].threshold;
+                                          float maxVal = terrainTypes[t].threshold;
+
+                                          pixels[index] = terrainTypes[t].colorGradient.Evaluate(1.0f - (maxVal - noiseMap[x, z]) / (maxVal - minVal));
+                                          break;
+                                   }
+                            }
                      }
               }
 
