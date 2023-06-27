@@ -11,16 +11,18 @@ public class NoiseGenerator : MonoBehaviour
     /// <param name="waves">wave data for naturalization of terrain data</param>
     /// <param name="resolution">how large the texture is going to be (a resolution of 1 will make each face of the mesh equal to 1 pixel)</param>
     /// <returns>a 2D float array</returns>
-    public static float[,] GenerateNoiseMap(int noiseSampleSize, float scale, Wave[] waves, int resolution = 1)
+    public static float[,] GenerateNoiseMap(int noiseSampleSize, float scale, Wave[] waves, Vector2 offset, int resolution = 1)
     {
+        //create a 2D float array
         float[,] noiseMap = new float[noiseSampleSize * resolution, noiseSampleSize * resolution];
 
         for (int x = 0; x < noiseSampleSize * resolution; x++)
         {
             for (int y = 0; y < noiseSampleSize * resolution; y++)
             {
-                float samplePosX = x / scale / resolution;
-                float samplePosY = y / scale / resolution;
+                //get an X and Y position to know where we're going to sample in perlin noise
+                float samplePosX = (x / scale / resolution) + offset.y;
+                float samplePosY = (y / scale / resolution) + offset.x;
 
                 float noise = 0f;
                 float normalization = 0f;

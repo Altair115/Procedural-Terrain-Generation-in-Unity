@@ -9,6 +9,9 @@ public class TileGenerator : MonoBehaviour
         public float scale;
         public float maxHeight = 1.0f;
         public int textureResolution = 1;
+        
+        [HideInInspector]
+        public Vector2 offset;
 
         [Header("Terrain Types")] 
         public TerrainType[] heightTerrainTypes;
@@ -38,8 +41,8 @@ public class TileGenerator : MonoBehaviour
         /// </summary>
         private void GenerateTile()
         {
-            float[,] heightMap = NoiseGenerator.GenerateNoiseMap(noiseSampleSize, scale, waves);
-            float[,] hdHeightMap = NoiseGenerator.GenerateNoiseMap(noiseSampleSize - 1, scale, waves, textureResolution);
+            float[,] heightMap = NoiseGenerator.GenerateNoiseMap(noiseSampleSize, scale, waves, offset);
+            float[,] hdHeightMap = NoiseGenerator.GenerateNoiseMap(noiseSampleSize - 1, scale, waves, offset, textureResolution);
 
             Vector3[] verts = _tileMeshFilter.mesh.vertices;
 
