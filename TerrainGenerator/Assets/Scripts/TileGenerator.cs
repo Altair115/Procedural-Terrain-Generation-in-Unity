@@ -13,6 +13,9 @@ public class TileGenerator : MonoBehaviour
         [Header("Terrain Types")] 
         public TerrainType[] heightTerrainTypes;
 
+        [Header("Waves")] 
+        public Wave[] waves;
+
         private MeshRenderer _tileMeshRenderer;
         private MeshFilter _tileMeshFilter;
         private MeshCollider _tileMeshCollider;
