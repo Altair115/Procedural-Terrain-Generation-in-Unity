@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 239216285}
   - component: {fileID: 239216284}
   - component: {fileID: 239216286}
+  - component: {fileID: 239216287}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -186,34 +187,56 @@ MonoBehaviour:
   biomes:
   - type: 0
     color: {r: 1, g: 0.7490196, b: 0.1137255, a: 1}
+    spawnPrefabs: 1
+    spawnablePrefabs:
+    - {fileID: 3303870227658366541, guid: 7c8ff5bbb3f5cbc42aa16bfa00ce011b, type: 3}
+    - {fileID: 2077413447702448652, guid: dfcaa79d8b0965c41b99f4173d9d7767, type: 3}
+    density: 0.2
+  - type: 1
+    color: {r: 0.078431375, g: 0.8196079, b: 0.95294124, a: 1}
     spawnPrefabs: 0
     spawnablePrefabs: []
     density: 0
-  - type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    spawnPrefabs: 0
-    spawnablePrefabs: []
-    density: 0
-  - type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    spawnPrefabs: 0
-    spawnablePrefabs: []
-    density: 0
-  - type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    spawnPrefabs: 0
-    spawnablePrefabs: []
-    density: 0
-  - type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    spawnPrefabs: 0
-    spawnablePrefabs: []
-    density: 0
+  - type: 2
+    color: {r: 0.8078432, g: 0.86666673, b: 0.24313727, a: 1}
+    spawnPrefabs: 1
+    spawnablePrefabs:
+    - {fileID: 1858929052626875265, guid: 2612c6ff250a39e4bba2c8ec125cfabf, type: 3}
+    - {fileID: 6853319082674209878, guid: be3a9860313fd9243840e144b282d1c0, type: 3}
+    density: 0.2
+  - type: 3
+    color: {r: 0.49803925, g: 0.8470589, b: 0.32941177, a: 1}
+    spawnPrefabs: 1
+    spawnablePrefabs:
+    - {fileID: 8178409640607109133, guid: a96e0f34eae476b4b8a2b9944de34456, type: 3}
+    - {fileID: 6882581712209515956, guid: a392745cf8beffa4bb10359af22d643d, type: 3}
+    density: 1
+  - type: 4
+    color: {r: 0.023529414, g: 0.56078434, b: 0.0627451, a: 1}
+    spawnPrefabs: 1
+    spawnablePrefabs:
+    - {fileID: 1858929052626875265, guid: 2612c6ff250a39e4bba2c8ec125cfabf, type: 3}
+    - {fileID: 8178409640607109133, guid: a96e0f34eae476b4b8a2b9944de34456, type: 3}
+    - {fileID: 6882581712209515956, guid: a392745cf8beffa4bb10359af22d643d, type: 3}
+    density: 2
   tableRows:
-  - tableColumns: 00000000000000000200000002000000
-  - tableColumns: 00000000000000000000000000000000
-  - tableColumns: 00000000000000000000000000000000
-  - tableColumns: 00000000000000000000000000000000
+  - tableColumns: 00000000000000000100000001000000
+  - tableColumns: 02000000020000000300000001000000
+  - tableColumns: 04000000040000000300000003000000
+  - tableColumns: 04000000040000000300000003000000
+--- !u!114 &239216287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239216283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f897c6bff103148a4a4dd8aa58c967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTreeOffset: 0.15
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

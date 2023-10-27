@@ -347,6 +347,7 @@
 "Assets/Scripts/NoiseGenerator.cs"
 "Assets/Scripts/TextureBuilder.cs"
 "Assets/Scripts/TileGenerator.cs"
+"Assets/Scripts/TreeSpawner.cs"
 -langversion:9.0
 
 /deterministic
