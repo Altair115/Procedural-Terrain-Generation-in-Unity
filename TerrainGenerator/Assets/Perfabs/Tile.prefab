@@ -66,10 +66,11 @@ MonoBehaviour:
   scale: 10
   maxHeight: 5
   textureResolution: 32
-  visualizationType: 2
+  visualizationType: 3
   offset: {x: 0, y: 0}
   heightTerrainTypes:
-  - threshold: 0.25
+  - index: 0
+    threshold: 0.25
     colorGradient:
       serializedVersion: 2
       key0: {r: 0, g: 0.56189966, b: 1, a: 1}
@@ -100,7 +101,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-  - threshold: 0.28
+  - index: 0
+    threshold: 0.28
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.36078432, g: 0.72156864, b: 1, a: 1}
@@ -131,7 +133,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 4
       m_NumAlphaKeys: 2
-  - threshold: 0.8
+  - index: 0
+    threshold: 0.8
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.09411766, g: 0.69411767, b: 0.07450981, a: 1}
@@ -162,7 +165,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 3
       m_NumAlphaKeys: 2
-  - threshold: 1
+  - index: 0
+    threshold: 1
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.5568628, g: 0.23529413, b: 0, a: 1}
@@ -194,7 +198,8 @@ MonoBehaviour:
       m_NumColorKeys: 4
       m_NumAlphaKeys: 2
   heatTerrainTypes:
-  - threshold: 0.25
+  - index: 0
+    threshold: 0.25
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 0, b: 0, a: 1}
@@ -225,7 +230,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-  - threshold: 0.5
+  - index: 1
+    threshold: 0.5
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 0.95224714, b: 0, a: 1}
@@ -256,7 +262,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-  - threshold: 0.75
+  - index: 2
+    threshold: 0.75
     colorGradient:
       serializedVersion: 2
       key0: {r: 0, g: 0.45309544, b: 1, a: 1}
@@ -287,7 +294,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-  - threshold: 1
+  - index: 3
+    threshold: 1
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.050391197, g: 0, b: 1, a: 1}
@@ -319,7 +327,8 @@ MonoBehaviour:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
   moistureTerrainTypes:
-  - threshold: 0.25
+  - index: 0
+    threshold: 0.25
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 0.8313726, b: 0.14901961, a: 1}
@@ -350,7 +359,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-  - threshold: 0.5
+  - index: 1
+    threshold: 0.5
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.6901961, g: 0.83921576, b: 0.41960788, a: 1}
@@ -381,7 +391,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-  - threshold: 0.75
+  - index: 2
+    threshold: 0.75
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.3921569, g: 0.77647066, b: 0.68235296, a: 1}
@@ -412,7 +423,8 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-  - threshold: 1
+  - index: 3
+    threshold: 1
     colorGradient:
       serializedVersion: 2
       key0: {r: 0, g: 0.5058824, b: 1, a: 1}
