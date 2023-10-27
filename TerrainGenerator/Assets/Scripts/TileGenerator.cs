@@ -2,6 +2,14 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
+
+public enum TerrainVisualization
+{
+    Height,
+    Heat,
+    Moisture
+}
+
 public class TileGenerator : MonoBehaviour
 {
         [Header("Parameters")]
@@ -9,6 +17,7 @@ public class TileGenerator : MonoBehaviour
         public float scale;
         public float maxHeight = 1.0f;
         public int textureResolution = 1;
+        public TerrainVisualization visualizationType;
         
         [HideInInspector]
         public Vector2 offset;
@@ -16,10 +25,12 @@ public class TileGenerator : MonoBehaviour
         [Header("Terrain Types")] 
         public TerrainType[] heightTerrainTypes;
         public TerrainType[] heatTerrainTypes;
+        public TerrainType[] moistureTerrainTypes;
 
         [Header("Waves")] 
         public Wave[] waves;
         public Wave[] heatWaves;
+        public Wave[] moistureWaves;
 
         [Header("Curves")] 
         public AnimationCurve heightCurve;
@@ -72,18 +83,33 @@ public class TileGenerator : MonoBehaviour
             //create the height map texture
             Texture2D heightMapTexture = TextureBuilder.BuildTexture(hdHeightMap, heightTerrainTypes);
 
-            //apply the height map texture to the MeshRenderer
-            //_tileMeshRenderer.material.mainTexture = heightMapTexture;
             float[,] heatMap = GenerateHeatMap(heightMap);
-            _tileMeshRenderer.material.mainTexture = TextureBuilder.BuildTexture(heatMap, heatTerrainTypes);
+            float[,] moistureMap = GenerateMoistureMap(heightMap);
+
+            //apply the chosen map texture to the MeshRenderer
+            switch (visualizationType)
+            {
+                case TerrainVisualization.Height:
+                    _tileMeshRenderer.material.mainTexture =
+                        TextureBuilder.BuildTexture(hdHeightMap, heightTerrainTypes);
+                    break;
+                case TerrainVisualization.Heat:
+                    _tileMeshRenderer.material.mainTexture = TextureBuilder.BuildTexture(heatMap, heatTerrainTypes);
+                    break;
+                case TerrainVisualization.Moisture:
+                    _tileMeshRenderer.material.mainTexture =
+                        TextureBuilder.BuildTexture(moistureMap, moistureTerrainTypes);
+                    break;
+            }
+            
         }
 
         /// <summary>
         /// Generates a new Heat mao
         /// </summary>
-        /// <param name="heightmap">takes a height map to apply a heatmap on top of</param>
+        /// <param name="heightMap">takes a height map to apply a heatmap on top of</param>
         /// <returns>a Heatmap</returns>
-        float[,] GenerateHeatMap(float[,] heightmap)
+        float[,] GenerateHeatMap(float[,] heightMap)
         {
             float[,] uniformHeatMap = NoiseGenerator.GenerateUniformNoiseMap(noiseSampleSize,
                 transform.position.z * (noiseSampleSize / _meshGenerator.xSize),
@@ -96,13 +122,32 @@ public class TileGenerator : MonoBehaviour
                 for (int z = 0; z < noiseSampleSize; z++)
                 {
                     heatMap[x, z] = randomHeatMap[x, z] * uniformHeatMap[x, z];
-                    heatMap[x, z] += 0.5f * heightmap[x, z];
+                    heatMap[x, z] += 0.5f * heightMap[x, z];
 
                     heatMap[x, z] = Mathf.Clamp(heatMap[x, z], 0.0f, 0.99f);
                 }
             }
 
             return heatMap;
+        }
+
+        /// <summary>
+        /// Generates a new moisture map
+        /// </summary>
+        /// <param name="heightMap">takes a heightmap to generate a map based on it</param>
+        /// <returns>a moisture map</returns>
+        float[,] GenerateMoistureMap(float[,] heightMap)
+        {
+            float[,] moistureMap = NoiseGenerator.GenerateNoiseMap(noiseSampleSize, scale, moistureWaves, offset);
+            for (int x = 0; x < noiseSampleSize; x++)
+            {
+                for (int z = 0; z < noiseSampleSize; z++)
+                {
+                    moistureMap[x, z] -= 0.1f * heightMap[x, z];
+                }
+            }
+
+            return moistureMap;
         }
 }
 
