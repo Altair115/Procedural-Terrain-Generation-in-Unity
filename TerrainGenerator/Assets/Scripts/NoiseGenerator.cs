@@ -41,6 +41,24 @@ public class NoiseGenerator : MonoBehaviour
 
         return noiseMap;
     }
+
+    public static float[,] GenerateUniformNoiseMap(int size, float vertexOffset, float maxVertexDistance)
+    {
+        float[,] noiseMap = new float[size, size];
+
+        for (int x = 0; x < size; x++)
+        {
+            float xSample = x + vertexOffset;
+            float noise = Mathf.Abs(xSample) / maxVertexDistance;
+
+            for (int z = 0; z < size; z++)
+            {
+                noiseMap[x, size - z - 1] = noise; //the -1 is for counteracting the offset
+            }
+        }
+
+        return noiseMap;
+    }
 }
 
 [System.Serializable]

@@ -15,9 +15,11 @@ public class TileGenerator : MonoBehaviour
 
         [Header("Terrain Types")] 
         public TerrainType[] heightTerrainTypes;
+        public TerrainType[] heatTerrainTypes;
 
         [Header("Waves")] 
         public Wave[] waves;
+        public Wave[] heatWaves;
 
         [Header("Curves")] 
         public AnimationCurve heightCurve;
@@ -25,6 +27,8 @@ public class TileGenerator : MonoBehaviour
         private MeshRenderer _tileMeshRenderer;
         private MeshFilter _tileMeshFilter;
         private MeshCollider _tileMeshCollider;
+        private MeshGenerator _meshGenerator;
+        private MapGenerator _mapGenerator;
 
         private void Start()
         {
@@ -32,6 +36,8 @@ public class TileGenerator : MonoBehaviour
             _tileMeshRenderer = GetComponent<MeshRenderer>();
             _tileMeshFilter = GetComponent<MeshFilter>();
             _tileMeshCollider = GetComponent<MeshCollider>();
+            _meshGenerator = GetComponent<MeshGenerator>();
+            _mapGenerator = FindObjectOfType<MapGenerator>();
             
             GenerateTile(); 
         }
@@ -60,11 +66,43 @@ public class TileGenerator : MonoBehaviour
             _tileMeshFilter.mesh.RecalculateBounds();
             _tileMeshFilter.mesh.RecalculateNormals();
 
+            //update mesh collider
             _tileMeshCollider.sharedMesh = _tileMeshFilter.mesh;
             
+            //create the height map texture
             Texture2D heightMapTexture = TextureBuilder.BuildTexture(hdHeightMap, heightTerrainTypes);
 
-            _tileMeshRenderer.material.mainTexture = heightMapTexture;
+            //apply the height map texture to the MeshRenderer
+            //_tileMeshRenderer.material.mainTexture = heightMapTexture;
+            float[,] heatMap = GenerateHeatMap(heightMap);
+            _tileMeshRenderer.material.mainTexture = TextureBuilder.BuildTexture(heatMap, heatTerrainTypes);
+        }
+
+        /// <summary>
+        /// Generates a new Heat mao
+        /// </summary>
+        /// <param name="heightmap">takes a height map to apply a heatmap on top of</param>
+        /// <returns>a Heatmap</returns>
+        float[,] GenerateHeatMap(float[,] heightmap)
+        {
+            float[,] uniformHeatMap = NoiseGenerator.GenerateUniformNoiseMap(noiseSampleSize,
+                transform.position.z * (noiseSampleSize / _meshGenerator.xSize),
+                (noiseSampleSize / 2 * _mapGenerator.numX + 1));
+            float[,] randomHeatMap = NoiseGenerator.GenerateNoiseMap(noiseSampleSize, scale, heatWaves, offset);
+
+            float[,] heatMap = new float[noiseSampleSize, noiseSampleSize];
+            for (int x = 0; x < noiseSampleSize; x++)
+            {
+                for (int z = 0; z < noiseSampleSize; z++)
+                {
+                    heatMap[x, z] = randomHeatMap[x, z] * uniformHeatMap[x, z];
+                    heatMap[x, z] += 0.5f * heightmap[x, z];
+
+                    heatMap[x, z] = Mathf.Clamp(heatMap[x, z], 0.0f, 0.99f);
+                }
+            }
+
+            return heatMap;
         }
 }
 
