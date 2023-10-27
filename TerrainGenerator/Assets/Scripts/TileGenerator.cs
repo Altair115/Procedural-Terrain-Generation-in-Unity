@@ -41,6 +41,7 @@ public class TileGenerator : MonoBehaviour
         private MeshCollider _tileMeshCollider;
         private MeshGenerator _meshGenerator;
         private MapGenerator _mapGenerator;
+        private TerrainData[,] _dataMap;
 
         private void Start()
         {
@@ -109,6 +110,33 @@ public class TileGenerator : MonoBehaviour
                     break;
             }
             
+            CreateDataMap(heatTerrainTypeMap, moistureTerrainTypeMap);
+            
+        }
+
+        /// <summary>
+        /// Creates a map with all the data of where all the biomes are located
+        /// </summary>
+        /// <param name="heatTerrainTypeMap"></param>
+        /// <param name="moistureTerrainType"></param>
+        void CreateDataMap(TerrainType[,] heatTerrainTypeMap, TerrainType[,] moistureTerrainType)
+        {
+            _dataMap = new TerrainData[noiseSampleSize, noiseSampleSize];
+            Vector3[] verts = _tileMeshFilter.mesh.vertices;
+
+            for (int x = 0; x < noiseSampleSize; x++)
+            {
+                for (int z = 0; z < noiseSampleSize; z++)
+                {
+                    TerrainData data = new TerrainData();
+                    data.position = transform.position + verts[(x * noiseSampleSize) + z];
+                    data.heatTerrainType = heatTerrainTypeMap[x, z];
+                    data.moistureTerrainType = moistureTerrainType[x, z];
+                    data.biome = BiomeBuilder.instance.GetBiome(data.heatTerrainType, data.moistureTerrainType);
+
+                    _dataMap[x, z] = data;
+                }
+            }
         }
 
         /// <summary>
@@ -165,5 +193,12 @@ public class TerrainType
     [Range(0.0f, 1.0f)]
     public float threshold;
     public Gradient colorGradient;
+}
 
+public class TerrainData
+{
+    public Vector3 position;
+    public TerrainType heatTerrainType;
+    public TerrainType moistureTerrainType;
+    public Biome biome;
 }
